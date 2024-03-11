@@ -26,20 +26,20 @@ public class Main {
 
                 double itemTotal = itemPrice * itemQuantity;
                 totalPrice += itemTotal;
-                totalItems.add(String.format("%-27s %2d $%7.2f $%7.2f", itemName, itemQuantity, itemPrice, itemTotal));
+                totalItems.add(String.format("%-28s %2d $%7.2f $%7.2f", itemName, itemQuantity, itemPrice, itemTotal));
             }
             else if (userInput.equalsIgnoreCase("T")){
 
                 System.out.println("==================================================");
                 System.out.println("                     INVOICE                      ");
-                System.out.println("   " + userAddress);
+                System.out.println(userAddress);
                 System.out.println("--------------------------------------------------");
-                System.out.printf("%-27s %3s %5s %5s \n", "ITEM", "QTY", "PRICE", "TOTAL");
+                System.out.printf("%-27s %3s %5s %8s \n", "ITEM", "QTY", "PRICE", "TOTAL");
                 for (String item : totalItems){
                     System.out.println(item);
                 }
                 System.out.println("--------------------------------------------------");
-                System.out.printf("AMOUNT DUE:  %37s\n", "$" + totalPrice);
+                System.out.printf("AMOUNT DUE:                              $%7.2f\n", totalPrice);
                 System.out.println("==================================================");
                 done = true;
             }

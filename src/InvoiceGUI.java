@@ -5,8 +5,14 @@ import java.util.ArrayList;
 public class InvoiceGUI {
     JFrame mainFrame = new JFrame();
     JPanel mainPanel = new JPanel();
-    JPanel itemPanel = new JPanel();
+        JTextArea currentInvoice = new JTextArea(5, 50);
     JPanel buttonPanel = new JPanel();
+    JPanel addPanel = new JPanel();
+        JTextArea itemName = new JTextArea(1, 50);
+        JTextArea itemPrice = new JTextArea(1, 10);
+        SpinnerModel itemQty = new SpinnerNumberModel(1, 1, 99, 1);
+            JSpinner spinner = new JSpinner(itemQty);
+    JPanel addButtonPanel = new JPanel();
 
     private void setMainFrame(){
         mainFrame.setTitle("Invoice");
@@ -16,7 +22,6 @@ public class InvoiceGUI {
     }
 
     private void setMainPanel(){
-        JTextArea currentInvoice = new JTextArea(11, 50);
         currentInvoice.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         currentInvoice.setEditable(false);
 
@@ -24,27 +29,41 @@ public class InvoiceGUI {
         currentInvoice.append("                      INVOICE                     \n");
         currentInvoice.append("--------------------------------------------------\n");
         currentInvoice.append("ITEM                       QTY    PRICE    TOTAL  \n");
-        currentInvoice.append("Apple                      ___    $0.65    _______\n");
-        currentInvoice.append("Juice                      ___    $5.51    _______\n");
-        currentInvoice.append("Cupcake                    ___    $2.25    _______\n");
-        currentInvoice.append("Strawberries               ___    $2.05    _______\n");
         currentInvoice.append("--------------------------------------------------\n");
-        currentInvoice.append("AMOUNT DUE:                            ___________\n");
+        currentInvoice.append("'Amount due' formatted string\n");
         currentInvoice.append("==================================================\n");
 
-        // _0_ _00 000
-        // $0.00__ $00.00_ $000.00
-        // $0.00______ $00.00_____ $000.00____ $0000.00___ $00000.00__ $000000.00_ $0000000.00
+        mainPanel.add(currentInvoice);
     }
 
-    private void setItemPanel(){
-        JComboBox item = new JComboBox(new String[]{"Apple", "Juice", "Cupcake", "Strawberries"});
+    public void updateMainPanel(ArrayList<Item> items){
+        currentInvoice.setRows(5 + items.size());
+        currentInvoice.setColumns(50);
+
+        // clear before adding text
+        currentInvoice.setText("");
+        currentInvoice.append("==================================================\n");
+        currentInvoice.append("                      INVOICE                     \n");
+        currentInvoice.append("--------------------------------------------------\n");
+        for (Item item : items){
+            currentInvoice.append("Whatever info " + item.getName() + "has\n");
+        }
+        currentInvoice.append("ITEM                       QTY    PRICE    TOTAL  \n");
+        currentInvoice.append("--------------------------------------------------\n");
+        currentInvoice.append("'Amount due' formatted string\n");
+        currentInvoice.append("==================================================\n");
+
+        // refreshes everything
+        currentInvoice.setVisible(false);
+        mainPanel.setVisible(false);
+        mainPanel.setVisible(true);
+        currentInvoice.setVisible(true);
     }
 
     private void setButtons(){
-        JButton add = new JButton();
-        JButton total = new JButton();
-        JButton quit = new JButton();
+        JButton add = new JButton("ADD");
+        JButton total = new JButton("TOTAL");
+        JButton quit = new JButton("QUIT");
 
         buttonPanel.setLayout(new GridLayout(3, 1));
         buttonPanel.add(add);
@@ -52,18 +71,23 @@ public class InvoiceGUI {
         buttonPanel.add(quit);
     }
 
-    public void updateMainFrame(){
-        updatePanels();
-        mainFrame.show();
+    private void setAddPanel(){
+        // JTextArea itemName = new JTextArea(1, 50);
+        // JTextArea itemPrice = new JTextArea(1, 10);
+        // SpinnerModel itemQty = new SpinnerNumberModel(1, 1, 99, 1);
+        //      JSpinner spinner = new JSpinner(itemQty);
 
-        // mainFrame.invalidate();
-        // mainFrame.validate();
-        // mainFrame.repaint();
-    }
+        JTextArea title = new JTextArea();
+        title.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
+        currentInvoice.setEditable(false);
+        title.setText("ADD");
 
-    private void updatePanels(){
-        // update invoice
-        // update item
-        // update button
+        itemName.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        itemName.setText("Enter item name here");
+
+        itemPrice.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        itemPrice.setText("Enter item price here [$0.00]");
+
+
     }
 }
